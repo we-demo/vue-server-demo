@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src", "./packages"],
+      "alias": {
+        "vue-server": "./packages/vue-server",
+        "@": "./src"
+      }
+    }]
+  ]
+}

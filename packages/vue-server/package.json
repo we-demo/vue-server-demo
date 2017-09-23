@@ -1,0 +1,10 @@
+{
+  "name": "vue-server",
+  "version": "0.0.1",
+  "main": "./src/",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "require-dir": "^0.3.2"
+  }
+}
