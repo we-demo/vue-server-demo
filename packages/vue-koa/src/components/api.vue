@@ -37,7 +37,6 @@ export default {
       let fn = this.method
         ? this.method.toLowerCase()
         : 'use'
-      console.log(fn, 'handlers', handlers)
       this.router[fn](this.fullUrl, ...handlers)
     }
   }

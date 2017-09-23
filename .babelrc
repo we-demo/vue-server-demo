@@ -3,7 +3,7 @@
     ["module-resolver", {
       "root": ["./src", "./packages"],
       "alias": {
-        "vue-server": "./packages/vue-server",
+        "vue-koa": "./packages/vue-koa",
         "@": "./src"
       }
     }]

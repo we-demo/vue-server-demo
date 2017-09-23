@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import VueServer from 'vue-server'
+import VueKoa from 'vue-koa'
 import Server from '@/server'
 
-Vue.use(VueServer)
+Vue.use(VueKoa)
 
 let Vm = Vue.extend(Server)
 let vm = new Vm()
