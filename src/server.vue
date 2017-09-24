@@ -34,6 +34,9 @@ export default {
       } catch (err) {
         let status = err && err.status || 500
         ctx.body = { status, error: err && err.message || `${err}` }
+        if (status >= 500) {
+          ctx.app.emit('error', err)
+        }
       }
     },
     createUser (ctx) {

@@ -2,12 +2,12 @@
 
 > "Vue is a language."
 
-Writing koa server in Vue.
-
 - [x] koa
 - [x] router
 - [x] api (method, url, use)
 - [x] listen (port)
+- [ ] vue ssr
+- [ ] websocket
 - [ ] more...
 
 ```plain
@@ -19,12 +19,16 @@ Writing koa server in Vue.
       ├─ main.js
       ├─ server.vue
       └─ setup.js
-   └─ .babelrc
+   ├─ .babelrc
    └─ package.json
 ```
 
-```plain
-npm install -S vue-server
+```sh
+# npm run dev
+nodemon . -e js,json,vue
+
+# npm start
+cross-env=production node .
 ```
 
 ```js
@@ -90,4 +94,4 @@ export default {
 
 ## Credits
 
-Thanks to [vue](https://github.com/vuejs/vue), [avoriaz-ava-example](https://github.com/eddyerburgh/avoriaz-ava-example).
+Thanks to [Vue](https://github.com/vuejs/vue), [avoriaz-ava-example](https://github.com/eddyerburgh/avoriaz-ava-example).

@@ -18,6 +18,12 @@ export default {
     return {
       app: new koa()
     }
+  },
+
+  created () {
+    this.app.on('error', err => {
+      console.error('Koa error', err)
+    })
   }
 }
 </script>
