@@ -1,10 +1,12 @@
 <template>
   <koa>
-    <router>
+    <router url="/api">
+      <api :use="apiMiddleware"></api>
       <api url="/users">
-        <api method="GET" url="/list" :use="listUsers"></api>
-        <api method="POST" url="/create" :use="[koaBody, createUser]"></api>
+        <api method="get" url="/list" :use="listUsers"></api>
+        <api method="post" url="/create" :use="[koaBody, createUser]"></api>
       </api>
+      <api method="all" url="*" :use="apiNotFound"></api>
     </router>
     <listen :port="port"></listen>
   </koa>
@@ -26,6 +28,14 @@ export default {
   },
 
   methods: {
+    async apiMiddleware (ctx, next) {
+      try {
+        await next()
+      } catch (err) {
+        let status = err && err.status || 500
+        ctx.body = { status, error: err && err.message || `${err}` }
+      }
+    },
     createUser (ctx) {
       let user = ctx.request.body
       this.users.push(user)
@@ -34,6 +44,9 @@ export default {
     },
     listUsers (ctx) {
       ctx.body = this.users
+    },
+    apiNotFound (ctx) {
+      ctx.throw(404, 'Api not found')
     }
   }
 }

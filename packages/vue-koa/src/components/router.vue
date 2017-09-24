@@ -17,9 +17,15 @@ export default {
     }
   },
 
+  props: {
+    url: String
+  },
+
   data () {
     return {
-      router: new Router()
+      router: new Router({
+        prefix: this.url
+      })
     }
   },
 

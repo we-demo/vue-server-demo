@@ -22,7 +22,7 @@ export default {
 
   data () {
     return {
-      fullUrl: (this.urlPrefix || '') + this.url
+      fullUrl: (this.urlPrefix || '') + (this.url || '')
     }
   },
 
@@ -37,7 +37,11 @@ export default {
       let fn = this.method
         ? this.method.toLowerCase()
         : 'use'
-      this.router[fn](this.fullUrl, ...handlers)
+      let args = [...handlers]
+      if (this.fullUrl) {
+        args.unshift(this.fullUrl)
+      }
+      this.router[fn](...args)
     }
   }
 }

@@ -13,11 +13,11 @@ Writing koa server in Vue.
 ```plain
 /
 └─ ServerApp
-   └─ src
-      ├- components/
+   └─ src/
+      ├─ components/
       ├─ index.js
-      ├- main.js
-      ├- server.vue
+      ├─ main.js
+      ├─ server.vue
       └─ setup.js
    └─ .babelrc
    └─ package.json
@@ -30,10 +30,10 @@ npm install -S vue-server
 ```js
 // main.js
 import Vue from 'vue'
-import VueServer from 'vue-server'
+import VueKoa from 'vue-koa'
 import Server from '@/server'
 
-Vue.use(VueServer)
+Vue.use(VueKoa)
 
 let Vm = Vue.extend(Server)
 let vm = new Vm()
@@ -44,24 +44,23 @@ vm.$mount()
 <!-- server.vue -->
 <template>
   <koa>
-    <router>
+    <router url="/api">
+      <api :use="apiMiddleware"></api>
       <api url="/users">
-        <api method="GET" url="/list" :use="listUsers"></api>
-        <api method="POST" url="/create" :use="[koaBody, createUser]"></api>
+        <api method="get" url="/list" :use="listUsers"></api>
+        <api method="post" url="/create" :use="[koaBody, createUser]"></api>
       </api>
+      <api method="all" url="*" :use="apiNotFound"></api>
     </router>
     <listen :port="port"></listen>
   </koa>
 </template>
+```
 
-<script>
-import KoaBody from 'koa-body'
-
+```js
+// server.vue <script>
 export default {
-  beforeCreate () {
-    this.koaBody = KoaBody()
-  },
-
+  // ...
   data () {
     return {
       users: [],
@@ -70,6 +69,9 @@ export default {
   },
 
   methods: {
+    async apiMiddleware (ctx, next) {
+      // ...
+    },
     createUser (ctx) {
       let user = ctx.request.body
       this.users.push(user)
@@ -78,10 +80,12 @@ export default {
     },
     listUsers (ctx) {
       ctx.body = this.users
+    },
+    apiNotFound (ctx) {
+      ctx.throw(404, 'Api not found')
     }
   }
 }
-</script>
 ```
 
 ## Credits
